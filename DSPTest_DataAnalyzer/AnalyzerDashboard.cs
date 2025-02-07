@@ -34,7 +34,6 @@ namespace DSPTest_DataAnalyzer
             Application.Exit();
         }
 
-
         private void btnDashClose_MouseEnter(object sender, EventArgs e)
         {
             picBxCloseBtn.Size = new Size(picBxCloseBtn.Width + 2, picBxCloseBtn.Height + 2);

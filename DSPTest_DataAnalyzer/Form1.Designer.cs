@@ -28,30 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAnalyzer));
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.pnlTop = new System.Windows.Forms.Panel();
-            this.cmbBxCustomers = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.btnCnsSearch = new System.Windows.Forms.Button();
+            this.btnPcBxBack = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cmbBxCustomers = new System.Windows.Forms.ComboBox();
             this.chartUsagePeaks = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pnlChartSec = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lblLoadPeaks = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.lblMaximumPeak = new System.Windows.Forms.Label();
+            this.lblLoadPeaksCount = new System.Windows.Forms.Label();
+            this.lblLoadPeaks = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
-            this.btnCnsSearch = new System.Windows.Forms.Button();
             this.pnlTop.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPcBxBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartUsagePeaks)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.pnlChartSec.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -60,7 +60,7 @@
             // 
             this.pnlTop.BackColor = System.Drawing.SystemColors.MenuText;
             this.pnlTop.Controls.Add(this.btnCnsSearch);
-            this.pnlTop.Controls.Add(this.pictureBox1);
+            this.pnlTop.Controls.Add(this.btnPcBxBack);
             this.pnlTop.Controls.Add(this.label2);
             this.pnlTop.Controls.Add(this.label1);
             this.pnlTop.Controls.Add(this.cmbBxCustomers);
@@ -69,27 +69,27 @@
             this.pnlTop.Size = new System.Drawing.Size(1416, 158);
             this.pnlTop.TabIndex = 0;
             // 
-            // cmbBxCustomers
+            // btnCnsSearch
             // 
-            this.cmbBxCustomers.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.cmbBxCustomers.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cmbBxCustomers.FormattingEnabled = true;
-            this.cmbBxCustomers.Location = new System.Drawing.Point(215, 109);
-            this.cmbBxCustomers.Name = "cmbBxCustomers";
-            this.cmbBxCustomers.Size = new System.Drawing.Size(311, 24);
-            this.cmbBxCustomers.TabIndex = 0;
+            this.btnCnsSearch.Location = new System.Drawing.Point(553, 109);
+            this.btnCnsSearch.Name = "btnCnsSearch";
+            this.btnCnsSearch.Size = new System.Drawing.Size(115, 24);
+            this.btnCnsSearch.TabIndex = 2;
+            this.btnCnsSearch.Text = "Search";
+            this.btnCnsSearch.UseVisualStyleBackColor = true;
+            this.btnCnsSearch.Click += new System.EventHandler(this.btnCnsSearch_Click);
             // 
-            // label1
+            // btnPcBxBack
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Forte", 18F, System.Drawing.FontStyle.Italic);
-            this.label1.ForeColor = System.Drawing.Color.AliceBlue;
-            this.label1.Location = new System.Drawing.Point(620, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(244, 32);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "User Consumption";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnPcBxBack.BackColor = System.Drawing.Color.Transparent;
+            this.btnPcBxBack.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnPcBxBack.BackgroundImage")));
+            this.btnPcBxBack.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnPcBxBack.Location = new System.Drawing.Point(18, 15);
+            this.btnPcBxBack.Name = "btnPcBxBack";
+            this.btnPcBxBack.Size = new System.Drawing.Size(28, 28);
+            this.btnPcBxBack.TabIndex = 0;
+            this.btnPcBxBack.TabStop = false;
+            this.btnPcBxBack.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // label2
             // 
@@ -103,32 +103,43 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Select User";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Forte", 18F, System.Drawing.FontStyle.Italic);
+            this.label1.ForeColor = System.Drawing.Color.AliceBlue;
+            this.label1.Location = new System.Drawing.Point(611, 22);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(244, 32);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "User Consumption";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // cmbBxCustomers
+            // 
+            this.cmbBxCustomers.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cmbBxCustomers.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cmbBxCustomers.FormattingEnabled = true;
+            this.cmbBxCustomers.Location = new System.Drawing.Point(215, 109);
+            this.cmbBxCustomers.Name = "cmbBxCustomers";
+            this.cmbBxCustomers.Size = new System.Drawing.Size(311, 24);
+            this.cmbBxCustomers.TabIndex = 0;
+            // 
             // chartUsagePeaks
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chartUsagePeaks.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chartUsagePeaks.Legends.Add(legend3);
+            chartArea1.Name = "ChartArea1";
+            this.chartUsagePeaks.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartUsagePeaks.Legends.Add(legend1);
             this.chartUsagePeaks.Location = new System.Drawing.Point(3, 3);
             this.chartUsagePeaks.Name = "chartUsagePeaks";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chartUsagePeaks.Series.Add(series3);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chartUsagePeaks.Series.Add(series1);
             this.chartUsagePeaks.Size = new System.Drawing.Size(729, 516);
             this.chartUsagePeaks.TabIndex = 1;
             this.chartUsagePeaks.Text = "chart1";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.Location = new System.Drawing.Point(14, 13);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(28, 28);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
             // 
             // pnlChartSec
             // 
@@ -143,23 +154,13 @@
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.lblMaximumPeak);
+            this.panel1.Controls.Add(this.lblLoadPeaksCount);
             this.panel1.Controls.Add(this.lblLoadPeaks);
             this.panel1.Location = new System.Drawing.Point(769, 178);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(632, 100);
             this.panel1.TabIndex = 3;
-            // 
-            // lblLoadPeaks
-            // 
-            this.lblLoadPeaks.AutoSize = true;
-            this.lblLoadPeaks.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLoadPeaks.Location = new System.Drawing.Point(13, 19);
-            this.lblLoadPeaks.Name = "lblLoadPeaks";
-            this.lblLoadPeaks.Size = new System.Drawing.Size(90, 16);
-            this.lblLoadPeaks.TabIndex = 0;
-            this.lblLoadPeaks.Text = "Load Peaks";
             // 
             // label3
             // 
@@ -171,16 +172,6 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "Maximum Peak";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(134, 19);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(11, 16);
-            this.label4.TabIndex = 0;
-            this.label4.Text = ":";
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -191,25 +182,45 @@
             this.label5.TabIndex = 0;
             this.label5.Text = ":";
             // 
-            // label6
+            // label4
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(173, 19);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(80, 16);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Load Peaks";
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(134, 19);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(11, 16);
+            this.label4.TabIndex = 0;
+            this.label4.Text = ":";
             // 
-            // label7
+            // lblMaximumPeak
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(173, 55);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(99, 16);
-            this.label7.TabIndex = 0;
-            this.label7.Text = "Maximum Peak";
+            this.lblMaximumPeak.AutoSize = true;
+            this.lblMaximumPeak.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMaximumPeak.Location = new System.Drawing.Point(173, 55);
+            this.lblMaximumPeak.Name = "lblMaximumPeak";
+            this.lblMaximumPeak.Size = new System.Drawing.Size(99, 16);
+            this.lblMaximumPeak.TabIndex = 0;
+            this.lblMaximumPeak.Text = "Maximum Peak";
+            // 
+            // lblLoadPeaksCount
+            // 
+            this.lblLoadPeaksCount.AutoSize = true;
+            this.lblLoadPeaksCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLoadPeaksCount.Location = new System.Drawing.Point(173, 19);
+            this.lblLoadPeaksCount.Name = "lblLoadPeaksCount";
+            this.lblLoadPeaksCount.Size = new System.Drawing.Size(80, 16);
+            this.lblLoadPeaksCount.TabIndex = 0;
+            this.lblLoadPeaksCount.Text = "Load Peaks";
+            // 
+            // lblLoadPeaks
+            // 
+            this.lblLoadPeaks.AutoSize = true;
+            this.lblLoadPeaks.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLoadPeaks.Location = new System.Drawing.Point(13, 19);
+            this.lblLoadPeaks.Name = "lblLoadPeaks";
+            this.lblLoadPeaks.Size = new System.Drawing.Size(90, 16);
+            this.lblLoadPeaks.TabIndex = 0;
+            this.lblLoadPeaks.Text = "Load Peaks";
             // 
             // panel2
             // 
@@ -230,16 +241,6 @@
             this.button1.Text = "Graphics";
             this.button1.UseVisualStyleBackColor = false;
             // 
-            // btnCnsSearch
-            // 
-            this.btnCnsSearch.Location = new System.Drawing.Point(553, 109);
-            this.btnCnsSearch.Name = "btnCnsSearch";
-            this.btnCnsSearch.Size = new System.Drawing.Size(115, 24);
-            this.btnCnsSearch.TabIndex = 2;
-            this.btnCnsSearch.Text = "Search";
-            this.btnCnsSearch.UseVisualStyleBackColor = true;
-            this.btnCnsSearch.Click += new System.EventHandler(this.btnCnsSearch_Click);
-            // 
             // frmAnalyzer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -256,8 +257,8 @@
             this.Text = "Form1";
             this.pnlTop.ResumeLayout(false);
             this.pnlTop.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPcBxBack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartUsagePeaks)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.pnlChartSec.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -272,15 +273,15 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmbBxCustomers;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartUsagePeaks;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox btnPcBxBack;
         private System.Windows.Forms.Panel pnlChartSec;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblLoadPeaksCount;
         private System.Windows.Forms.Label lblLoadPeaks;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblMaximumPeak;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnCnsSearch;

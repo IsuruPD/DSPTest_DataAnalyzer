@@ -18,7 +18,12 @@ namespace DSPTest_DataAnalyzer
         {
             InitializeComponent();
             chartUsagePeaks.Parent = pnlChartSec;
+            btnPcBxBack.Cursor = Cursors.Hand;
             FetchData();
+
+
+            btnPcBxBack.MouseEnter += new EventHandler(btnPcBxBack_MouseEnter);
+            btnPcBxBack.MouseLeave += new EventHandler(btnPcBxBack_MouseLeave);
         }
 
 
@@ -55,13 +60,94 @@ namespace DSPTest_DataAnalyzer
         {
             if (cmbBxCustomers.SelectedIndex == -1)
             {
-                MessageBox.Show("Select a customer first");
+                MessageBox.Show("Select a customer first", "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            else
+
+            string selectedCustomer = cmbBxCustomers.SelectedItem.ToString();
+            lblMaximumPeak.Text = selectedCustomer;
+            PlotCustomerData(selectedCustomer);
+            CalculateNumberOfLoadPeaks();
+            GetMaxLoadPeak();
+        }
+
+        private void PlotCustomerData(string customerName)
+        {
+            string connectionString = "Server=(localdb)\\mssqllocaldb;Database=DSPTest;Integrated Security=True;";
+            string query = $"SELECT Time, [{customerName}] FROM tbl_customer_usage ORDER BY Time";
+
+            try
             {
-                //TestPlotter();
+                chartUsagePeaks.Series.Clear(); 
+
+                var series = new Series
+                {
+                    Name = customerName,
+                    ChartType = SeriesChartType.Line,
+                    IsVisibleInLegend = true
+                };
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string timeValue = reader[0].ToString();
+                            double powerConsumption = 0;
+
+                            if (!reader.IsDBNull(1))
+                            {
+                                powerConsumption = Convert.ToDouble(reader[1]); 
+                            }
+
+                            series.Points.AddXY(timeValue, powerConsumption);
+                        }
+                    }
+                }
+
+                chartUsagePeaks.Series.Add(series);
+                chartUsagePeaks.ChartAreas[0].AxisX.Title = "Time (Hours)";
+                chartUsagePeaks.ChartAreas[0].AxisY.Title = "Power Consumption (kWh)";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Data Fetch Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void CalculateNumberOfLoadPeaks()
+        {
+
+        }
+
+        private void GetMaxLoadPeak()
+        {
+
+        }
+
+
+        private void btnPcBxBack_MouseEnter(object sender, EventArgs e)
+        {
+            btnPcBxBack.Size = new Size(btnPcBxBack.Width + 2, btnPcBxBack.Height + 2);
+            btnPcBxBack.Location = new Point(btnPcBxBack.Location.X - 1, btnPcBxBack.Location.Y - 1);
+        }
+
+        private void btnPcBxBack_MouseLeave(object sender, EventArgs e)
+        {
+            btnPcBxBack.Size = new Size(btnPcBxBack.Width - 2, btnPcBxBack.Height - 2);
+            btnPcBxBack.Location = new Point(btnPcBxBack.Location.X + 1, btnPcBxBack.Location.Y + 1);
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            AnalyzerDashboard dashboard = new AnalyzerDashboard();
+            dashboard.Show();
+            this.Close();
+        }
+
         /*
         private void TestPlotter()
         {
