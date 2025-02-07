@@ -67,8 +67,15 @@ namespace DSPTest_DataAnalyzer
             string selectedCustomer = cmbBxCustomers.SelectedItem.ToString();
             lblMaximumPeak.Text = selectedCustomer;
             PlotCustomerData(selectedCustomer);
-            CalculateNumberOfLoadPeaks();
-            GetMaxLoadPeak();
+
+            // Count peaks 
+            int peakCount = CountLoadPeaks(selectedCustomer);
+            lblLoadPeaksCount.Text = $"{peakCount}";
+            // Get the highest peak
+            double maxPeak = GetHighestLoadPeak(selectedCustomer);
+            lblMaximumPeak.Text = $"{maxPeak} kWh";
+            // Tabulate hourly consumption
+            DisplayHourlyPowerConsumption(selectedCustomer);
         }
 
         private void PlotCustomerData(string customerName)
@@ -118,16 +125,134 @@ namespace DSPTest_DataAnalyzer
             }
         }
 
-        private void CalculateNumberOfLoadPeaks()
+        private int CountLoadPeaks(string customerName)
         {
+            string connectionString = "Server=(localdb)\\mssqllocaldb;Database=DSPTest;Integrated Security=True;";
+            string query = $"SELECT Time, [{customerName}] FROM tbl_customer_usage ORDER BY Time";
 
+            List<double> dataPoints = new List<double>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (!reader.IsDBNull(1))
+                            {
+                                dataPoints.Add(Convert.ToDouble(reader[1]));
+                            }
+                        }
+                    }
+                }
+
+                return CalculatePeaks(dataPoints);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Peak Count Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
         }
 
-        private void GetMaxLoadPeak()
+        private int CalculatePeaks(List<double> data)
         {
+            int peakCount = 0;
 
+            for (int i = 1; i < data.Count - 1; i++)
+            {
+                if (data[i] > data[i - 1] && data[i] > data[i + 1])
+                {
+                    peakCount++;
+                }
+            }
+
+            return peakCount;
         }
 
+        private double GetHighestLoadPeak(string customerName)
+        {
+            string connectionString = "Server=(localdb)\\mssqllocaldb;Database=DSPTest;Integrated Security=True;";
+            string query = $"SELECT Time, [{customerName}] FROM tbl_customer_usage ORDER BY Time";
+
+            List<double> dataPoints = new List<double>();
+            double maxPeak = double.MinValue;
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (!reader.IsDBNull(1))
+                            {
+                                dataPoints.Add(Convert.ToDouble(reader[1]));
+                            }
+                        }
+                    }
+                }
+
+                // Find the maximum peak value
+                for (int i = 1; i < dataPoints.Count - 1; i++)
+                {
+                    if (dataPoints[i] > dataPoints[i - 1] && dataPoints[i] > dataPoints[i + 1])
+                    {
+                        maxPeak = Math.Max(maxPeak, dataPoints[i]);
+                    }
+                }
+
+                return maxPeak == double.MinValue ? 0 : maxPeak;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Max Peak Calculation Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
+        }
+
+        private void DisplayHourlyPowerConsumption(string customerName)
+        {
+            string connectionString = "Server=(localdb)\\mssqllocaldb;Database=DSPTest;Integrated Security=True;";
+
+            string query = $@"
+                            SELECT 
+                            DATEPART(HOUR, Time) AS Hour, 
+                            SUM([{customerName}]) AS TotalConsumption
+                            FROM tbl_customer_usage
+                            GROUP BY DATEPART(HOUR, Time)
+                            ORDER BY Hour";
+
+            try
+            {
+                DataTable dataTable = new DataTable();
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        dataTable.Load(reader);
+                    }
+                }
+
+                dgvConsumptionSummary.DataSource = dataTable;
+                dgvConsumptionSummary.Columns["Hour"].HeaderText = "Hour";
+                dgvConsumptionSummary.Columns["TotalConsumption"].HeaderText = "Power Consumption (kWh)";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Failed to fetch hourly data", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         private void btnPcBxBack_MouseEnter(object sender, EventArgs e)
         {
@@ -146,6 +271,11 @@ namespace DSPTest_DataAnalyzer
             AnalyzerDashboard dashboard = new AnalyzerDashboard();
             dashboard.Show();
             this.Close();
+        }
+
+        private void lblLoadPeaksCount_Click(object sender, EventArgs e)
+        {
+
         }
 
         /*

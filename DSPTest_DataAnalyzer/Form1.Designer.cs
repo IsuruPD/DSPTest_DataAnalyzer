@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAnalyzer));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.pnlTop = new System.Windows.Forms.Panel();
             this.btnCnsSearch = new System.Windows.Forms.Button();
             this.btnPcBxBack = new System.Windows.Forms.PictureBox();
@@ -49,11 +49,14 @@
             this.lblLoadPeaks = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
+            this.dgvConsumptionSummary = new System.Windows.Forms.DataGridView();
             this.pnlTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnPcBxBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartUsagePeaks)).BeginInit();
             this.pnlChartSec.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvConsumptionSummary)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlTop
@@ -127,16 +130,16 @@
             // 
             // chartUsagePeaks
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartUsagePeaks.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartUsagePeaks.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.chartUsagePeaks.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chartUsagePeaks.Legends.Add(legend2);
             this.chartUsagePeaks.Location = new System.Drawing.Point(3, 3);
             this.chartUsagePeaks.Name = "chartUsagePeaks";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chartUsagePeaks.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chartUsagePeaks.Series.Add(series2);
             this.chartUsagePeaks.Size = new System.Drawing.Size(729, 516);
             this.chartUsagePeaks.TabIndex = 1;
             this.chartUsagePeaks.Text = "chart1";
@@ -198,9 +201,9 @@
             this.lblMaximumPeak.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMaximumPeak.Location = new System.Drawing.Point(173, 55);
             this.lblMaximumPeak.Name = "lblMaximumPeak";
-            this.lblMaximumPeak.Size = new System.Drawing.Size(99, 16);
+            this.lblMaximumPeak.Size = new System.Drawing.Size(30, 16);
             this.lblMaximumPeak.TabIndex = 0;
-            this.lblMaximumPeak.Text = "Maximum Peak";
+            this.lblMaximumPeak.Text = "N/A";
             // 
             // lblLoadPeaksCount
             // 
@@ -208,9 +211,10 @@
             this.lblLoadPeaksCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLoadPeaksCount.Location = new System.Drawing.Point(173, 19);
             this.lblLoadPeaksCount.Name = "lblLoadPeaksCount";
-            this.lblLoadPeaksCount.Size = new System.Drawing.Size(80, 16);
+            this.lblLoadPeaksCount.Size = new System.Drawing.Size(30, 16);
             this.lblLoadPeaksCount.TabIndex = 0;
-            this.lblLoadPeaksCount.Text = "Load Peaks";
+            this.lblLoadPeaksCount.Text = "N/A";
+            this.lblLoadPeaksCount.Click += new System.EventHandler(this.lblLoadPeaksCount_Click);
             // 
             // lblLoadPeaks
             // 
@@ -224,6 +228,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.dgvConsumptionSummary);
             this.panel2.Location = new System.Drawing.Point(769, 302);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(632, 357);
@@ -240,6 +245,20 @@
             this.button1.TabIndex = 5;
             this.button1.Text = "Graphics";
             this.button1.UseVisualStyleBackColor = false;
+            // 
+            // dgvConsumptionSummary
+            // 
+            this.dgvConsumptionSummary.AllowUserToAddRows = false;
+            this.dgvConsumptionSummary.AllowUserToDeleteRows = false;
+            this.dgvConsumptionSummary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvConsumptionSummary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvConsumptionSummary.Location = new System.Drawing.Point(0, 0);
+            this.dgvConsumptionSummary.Name = "dgvConsumptionSummary";
+            this.dgvConsumptionSummary.ReadOnly = true;
+            this.dgvConsumptionSummary.RowHeadersWidth = 51;
+            this.dgvConsumptionSummary.RowTemplate.Height = 24;
+            this.dgvConsumptionSummary.Size = new System.Drawing.Size(632, 357);
+            this.dgvConsumptionSummary.TabIndex = 0;
             // 
             // frmAnalyzer
             // 
@@ -262,6 +281,8 @@
             this.pnlChartSec.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvConsumptionSummary)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -285,6 +306,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnCnsSearch;
+        private System.Windows.Forms.DataGridView dgvConsumptionSummary;
     }
 }
 
