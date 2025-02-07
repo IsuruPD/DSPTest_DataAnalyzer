@@ -48,8 +48,8 @@
             this.lblLoadPeaksCount = new System.Windows.Forms.Label();
             this.lblLoadPeaks = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
             this.dgvConsumptionSummary = new System.Windows.Forms.DataGridView();
+            this.button1 = new System.Windows.Forms.Button();
             this.pnlTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnPcBxBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartUsagePeaks)).BeginInit();
@@ -71,6 +71,7 @@
             this.pnlTop.Name = "pnlTop";
             this.pnlTop.Size = new System.Drawing.Size(1416, 158);
             this.pnlTop.TabIndex = 0;
+            this.pnlTop.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlTop_Paint);
             // 
             // btnCnsSearch
             // 
@@ -234,18 +235,6 @@
             this.panel2.Size = new System.Drawing.Size(632, 357);
             this.panel2.TabIndex = 4;
             // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.button1.Location = new System.Drawing.Point(1185, 667);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(216, 30);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Graphics";
-            this.button1.UseVisualStyleBackColor = false;
-            // 
             // dgvConsumptionSummary
             // 
             this.dgvConsumptionSummary.AllowUserToAddRows = false;
@@ -260,6 +249,19 @@
             this.dgvConsumptionSummary.Size = new System.Drawing.Size(632, 357);
             this.dgvConsumptionSummary.TabIndex = 0;
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.button1.Location = new System.Drawing.Point(1185, 667);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(216, 30);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "Graphics";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frmAnalyzer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -271,9 +273,11 @@
             this.Controls.Add(this.pnlChartSec);
             this.Controls.Add(this.pnlTop);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmAnalyzer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.frmAnalyzer_Load);
             this.pnlTop.ResumeLayout(false);
             this.pnlTop.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnPcBxBack)).EndInit();

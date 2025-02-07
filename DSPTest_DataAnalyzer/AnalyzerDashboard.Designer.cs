@@ -30,9 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnalyzerDashboard));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.picBxCloseBtn = new System.Windows.Forms.PictureBox();
             this.lblTitle = new System.Windows.Forms.Label();
             this.btnAnalyzer = new System.Windows.Forms.Button();
-            this.picBxCloseBtn = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBxCloseBtn)).BeginInit();
             this.SuspendLayout();
@@ -47,6 +47,18 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(997, 700);
             this.panel1.TabIndex = 0;
+            // 
+            // picBxCloseBtn
+            // 
+            this.picBxCloseBtn.BackColor = System.Drawing.Color.Transparent;
+            this.picBxCloseBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picBxCloseBtn.BackgroundImage")));
+            this.picBxCloseBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.picBxCloseBtn.Location = new System.Drawing.Point(18, 14);
+            this.picBxCloseBtn.Name = "picBxCloseBtn";
+            this.picBxCloseBtn.Size = new System.Drawing.Size(34, 33);
+            this.picBxCloseBtn.TabIndex = 1;
+            this.picBxCloseBtn.TabStop = false;
+            this.picBxCloseBtn.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // lblTitle
             // 
@@ -66,25 +78,13 @@
             this.btnAnalyzer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnAnalyzer.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAnalyzer.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnAnalyzer.Location = new System.Drawing.Point(842, -16);
+            this.btnAnalyzer.Location = new System.Drawing.Point(842, -72);
             this.btnAnalyzer.Name = "btnAnalyzer";
-            this.btnAnalyzer.Size = new System.Drawing.Size(757, 717);
+            this.btnAnalyzer.Size = new System.Drawing.Size(757, 843);
             this.btnAnalyzer.TabIndex = 1;
             this.btnAnalyzer.Text = "View Records";
             this.btnAnalyzer.UseVisualStyleBackColor = true;
             this.btnAnalyzer.Click += new System.EventHandler(this.btnAnalyzer_Click);
-            // 
-            // picBxCloseBtn
-            // 
-            this.picBxCloseBtn.BackColor = System.Drawing.Color.Transparent;
-            this.picBxCloseBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picBxCloseBtn.BackgroundImage")));
-            this.picBxCloseBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.picBxCloseBtn.Location = new System.Drawing.Point(18, 14);
-            this.picBxCloseBtn.Name = "picBxCloseBtn";
-            this.picBxCloseBtn.Size = new System.Drawing.Size(34, 33);
-            this.picBxCloseBtn.TabIndex = 1;
-            this.picBxCloseBtn.TabStop = false;
-            this.picBxCloseBtn.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // AnalyzerDashboard
             // 
@@ -95,6 +95,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnAnalyzer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AnalyzerDashboard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AnalyzerDashboard";

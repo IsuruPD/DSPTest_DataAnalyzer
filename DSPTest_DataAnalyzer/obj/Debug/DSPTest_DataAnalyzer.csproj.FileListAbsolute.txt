@@ -9,3 +9,4 @@ D:\DSP\Training\DataAnalyzer\DSPTest_DataAnalyzer\DSPTest_DataAnalyzer\obj\Debug
 D:\DSP\Training\DataAnalyzer\DSPTest_DataAnalyzer\DSPTest_DataAnalyzer\obj\Debug\DSPTest_DataAnalyzer.pdb
 D:\DSP\Training\DataAnalyzer\DSPTest_DataAnalyzer\DSPTest_DataAnalyzer\obj\Debug\DSPTest_DataAnalyzer.frmAnalyzer.resources
 D:\DSP\Training\DataAnalyzer\DSPTest_DataAnalyzer\DSPTest_DataAnalyzer\obj\Debug\DSPTest_DataAnalyzer.AnalyzerDashboard.resources
+D:\DSP\Training\DataAnalyzer\DSPTest_DataAnalyzer\DSPTest_DataAnalyzer\obj\Debug\DSPTest_DataAnalyzer.TableGraphicsForm.resources

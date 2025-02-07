@@ -65,7 +65,6 @@ namespace DSPTest_DataAnalyzer
             }
 
             string selectedCustomer = cmbBxCustomers.SelectedItem.ToString();
-            lblMaximumPeak.Text = selectedCustomer;
             PlotCustomerData(selectedCustomer);
 
             // Count peaks 
@@ -274,6 +273,29 @@ namespace DSPTest_DataAnalyzer
         }
 
         private void lblLoadPeaksCount_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (cmbBxCustomers.SelectedIndex == -1)
+            {
+                MessageBox.Show("Select a customer first", "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string selectedCustomer = cmbBxCustomers.SelectedItem.ToString();
+            TableGraphicsForm tableGraphics = new TableGraphicsForm(selectedCustomer);
+            tableGraphics.Show();
+        }
+
+        private void pnlTop_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void frmAnalyzer_Load(object sender, EventArgs e)
         {
 
         }
