@@ -63,7 +63,7 @@ namespace DSPTest_DataAnalyzer
                 MessageBox.Show("Select a customer first", "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+            // Plot grpah
             string selectedCustomer = cmbBxCustomers.SelectedItem.ToString();
             PlotCustomerData(selectedCustomer);
 
@@ -115,8 +115,8 @@ namespace DSPTest_DataAnalyzer
                 }
 
                 chartUsagePeaks.Series.Add(series);
-                chartUsagePeaks.ChartAreas[0].AxisX.Title = "Time (Hours)";
-                chartUsagePeaks.ChartAreas[0].AxisY.Title = "Power Consumption (kWh)";
+                chartUsagePeaks.ChartAreas[0].AxisX.Title = "Time (Minutes)";
+                chartUsagePeaks.ChartAreas[0].AxisY.Title = "Demand";
             }
             catch (Exception ex)
             {
@@ -162,7 +162,7 @@ namespace DSPTest_DataAnalyzer
         {
             int peakCount = 0;
 
-            for (int i = 1; i < data.Count - 1; i++)
+            for (int i = 1; i < data.Count-1; i++)
             {
                 if (data[i] > data[i - 1] && data[i] > data[i + 1])
                 {
@@ -217,7 +217,7 @@ namespace DSPTest_DataAnalyzer
             }
         }
 
-        private void DisplayHourlyPowerConsumption(string customerName)
+        /*private void DisplayHourlyPowerConsumption(string customerName)
         {
             string connectionString = "Server=(localdb)\\mssqllocaldb;Database=DSPTest;Integrated Security=True;";
 
@@ -251,7 +251,7 @@ namespace DSPTest_DataAnalyzer
             {
                 MessageBox.Show($"Error: {ex.Message}", "Failed to fetch hourly data", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
+        }*/
 
         private void btnPcBxBack_MouseEnter(object sender, EventArgs e)
         {
@@ -299,6 +299,68 @@ namespace DSPTest_DataAnalyzer
         {
 
         }
+
+
+        private void DisplayHourlyPowerConsumption(string customerName)
+        {
+            string connectionString = "Server=(localdb)\\mssqllocaldb;Database=DSPTest;Integrated Security=True;";
+
+            string query = $@"SELECT Time,[{customerName}] AS Energy FROM tbl_customer_usage ORDER BY Time";
+
+            try
+            {
+                DataTable dataTable = new DataTable();
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        dataTable.Load(reader);
+                    }
+                }
+
+                Dictionary<int, double> hourlyPower = new Dictionary<int, double>();
+
+                for (int i = 0; i < dataTable.Rows.Count - 1; i++)
+                {
+                    DateTime time1 = Convert.ToDateTime(dataTable.Rows[i]["Time"]);
+                    DateTime time2 = Convert.ToDateTime(dataTable.Rows[i + 1]["Time"]);
+                    double energy1 = Convert.ToDouble(dataTable.Rows[i]["Energy"]);
+                    double energy2 = Convert.ToDouble(dataTable.Rows[i + 1]["Energy"]);
+
+                    double timeDif = (time2 - time1).TotalMinutes / 60.0;
+
+                    double power = ((energy1 + energy2) / 2) * timeDif;
+
+                    int hour = time1.Hour;
+
+                    if (!hourlyPower.ContainsKey(hour))
+                        hourlyPower[hour] = 0;
+
+                    hourlyPower[hour] += power;
+                }
+
+                DataTable resultTable = new DataTable();
+                resultTable.Columns.Add("Hour", typeof(int));
+                resultTable.Columns.Add("Power Consumption (kWh)", typeof(double));
+
+                foreach (var kvp in hourlyPower)
+                {
+                    resultTable.Rows.Add(kvp.Key, kvp.Value);
+                }
+
+                dgvConsumptionSummary.DataSource = resultTable;
+                dgvConsumptionSummary.Columns["Hour"].HeaderText = "Hour";
+                dgvConsumptionSummary.Columns["Power Consumption (kWh)"].HeaderText = "Power Consumption (kWh)";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Failed to fetch hourly data", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
         /*
         private void TestPlotter()
