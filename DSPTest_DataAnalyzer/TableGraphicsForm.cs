@@ -26,6 +26,7 @@ namespace DSPTest_DataAnalyzer
 
             btnPcBxBack.MouseEnter += new EventHandler(btnPcBxBack_MouseEnter);
             btnPcBxBack.MouseLeave += new EventHandler(btnPcBxBack_MouseLeave);
+            chrtHrlyConsumption.ChartAreas[0].AxisX.Minimum = 0;
         }
 
         private void btnPcBxBack_Click(object sender, EventArgs e)
@@ -47,18 +48,13 @@ namespace DSPTest_DataAnalyzer
 
         private void PlotHourlyConsumption(string customerName)
         {
-            string connectionString = "Server=(localdb)\\mssqllocaldb;Database=DSPTest;Integrated Security=True;";
+            string connectionString = "Server=DESKTOP-D81M7DI;Database=DSPTest;Integrated Security=True;";
 
-            string query = $@"
-                            SELECT 
-                            DATEPART(HOUR, Time) AS Hour, 
-                            SUM([{customerName}]) AS TotalConsumption
-                            FROM tbl_customer_usage
-                            GROUP BY DATEPART(HOUR, Time)
-                            ORDER BY Hour";
+            string query = $@"SELECT Time,[{customerName}] AS Energy FROM tbl_customer_usage ORDER BY Time";
 
             try
             {
+
                 chrtHrlyConsumption.Series.Clear();
 
                 var series = new Series
@@ -68,35 +64,56 @@ namespace DSPTest_DataAnalyzer
                     IsVisibleInLegend = true
                 };
 
+
+                DataTable dataTable = new DataTable();
+
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        while (reader.Read())
-                        {
-                            string timeValue = reader[0].ToString();
-                            double powerConsumption = 0;
-
-                            if (!reader.IsDBNull(1))
-                            {
-                                powerConsumption = Convert.ToDouble(reader[1]);
-                            }
-
-                            series.Points.AddXY(timeValue, powerConsumption);
-                        }
+                        dataTable.Load(reader);
                     }
+                }
+
+                Dictionary<int, double> hourlyPower = new Dictionary<int, double>();
+
+                for (int i = 0; i < dataTable.Rows.Count - 1; i++)
+                {
+                    DateTime time1 = Convert.ToDateTime(dataTable.Rows[i]["Time"]);
+                    DateTime time2 = Convert.ToDateTime(dataTable.Rows[i + 1]["Time"]);
+                    double energy1 = Convert.ToDouble(dataTable.Rows[i]["Energy"]);
+                    double energy2 = Convert.ToDouble(dataTable.Rows[i + 1]["Energy"]);
+
+                    double timeDif = (time2 - time1).TotalMinutes / 60.0;
+
+                    double power = ((energy1 + energy2) / 2) * timeDif;
+
+                    int hour = time1.Hour;
+
+                    if (!hourlyPower.ContainsKey(hour))
+                        hourlyPower[hour] = 0;
+
+                    hourlyPower[hour] += power;
+                }
+
+                foreach (var hp in hourlyPower)
+                {
+                    series.Points.AddXY(hp.Key, hp.Value);
                 }
 
                 chrtHrlyConsumption.Series.Add(series);
                 chrtHrlyConsumption.ChartAreas[0].AxisX.Title = "Time (Hours)";
                 chrtHrlyConsumption.ChartAreas[0].AxisY.Title = "Cumulative Power Consumption (kWh)";
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "Data Fetch Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error: {ex.Message}", "Failed to fetch hourly data", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+
         }
 
         private void TableGraphicsForm_Load(object sender, EventArgs e)

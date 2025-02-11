@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TableGraphicsForm));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.lblTitleHrlyConsumption = new System.Windows.Forms.Label();
             this.btnPcBxBack = new System.Windows.Forms.PictureBox();
             this.chrtHrlyConsumption = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -44,11 +44,12 @@
             // 
             this.lblTitleHrlyConsumption.AutoSize = true;
             this.lblTitleHrlyConsumption.BackColor = System.Drawing.Color.Transparent;
-            this.lblTitleHrlyConsumption.Font = new System.Drawing.Font("Forte", 18F, System.Drawing.FontStyle.Italic);
+            this.lblTitleHrlyConsumption.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Italic);
             this.lblTitleHrlyConsumption.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.lblTitleHrlyConsumption.Location = new System.Drawing.Point(303, 39);
+            this.lblTitleHrlyConsumption.Location = new System.Drawing.Point(227, 32);
+            this.lblTitleHrlyConsumption.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTitleHrlyConsumption.Name = "lblTitleHrlyConsumption";
-            this.lblTitleHrlyConsumption.Size = new System.Drawing.Size(283, 32);
+            this.lblTitleHrlyConsumption.Size = new System.Drawing.Size(230, 29);
             this.lblTitleHrlyConsumption.TabIndex = 2;
             this.lblTitleHrlyConsumption.Text = "Hourly Consumption";
             this.lblTitleHrlyConsumption.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -58,48 +59,52 @@
             this.btnPcBxBack.BackColor = System.Drawing.Color.Transparent;
             this.btnPcBxBack.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnPcBxBack.BackgroundImage")));
             this.btnPcBxBack.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnPcBxBack.Location = new System.Drawing.Point(14, 13);
+            this.btnPcBxBack.Location = new System.Drawing.Point(10, 11);
+            this.btnPcBxBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnPcBxBack.Name = "btnPcBxBack";
-            this.btnPcBxBack.Size = new System.Drawing.Size(28, 28);
+            this.btnPcBxBack.Size = new System.Drawing.Size(21, 23);
             this.btnPcBxBack.TabIndex = 3;
             this.btnPcBxBack.TabStop = false;
             this.btnPcBxBack.Click += new System.EventHandler(this.btnPcBxBack_Click);
             // 
             // chrtHrlyConsumption
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chrtHrlyConsumption.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chrtHrlyConsumption.Legends.Add(legend2);
-            this.chrtHrlyConsumption.Location = new System.Drawing.Point(48, 115);
+            chartArea1.Name = "ChartArea1";
+            this.chrtHrlyConsumption.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chrtHrlyConsumption.Legends.Add(legend1);
+            this.chrtHrlyConsumption.Location = new System.Drawing.Point(36, 93);
+            this.chrtHrlyConsumption.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chrtHrlyConsumption.Name = "chrtHrlyConsumption";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chrtHrlyConsumption.Series.Add(series2);
-            this.chrtHrlyConsumption.Size = new System.Drawing.Size(746, 417);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chrtHrlyConsumption.Series.Add(series1);
+            this.chrtHrlyConsumption.Size = new System.Drawing.Size(560, 339);
             this.chrtHrlyConsumption.TabIndex = 4;
-            this.chrtHrlyConsumption.Text = "chart1";
+            this.chrtHrlyConsumption.Text = "User Hourly Power Consumption";
             // 
             // pnlTitleHrlyConsumption
             // 
             this.pnlTitleHrlyConsumption.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pnlTitleHrlyConsumption.Location = new System.Drawing.Point(-5, -5);
+            this.pnlTitleHrlyConsumption.Location = new System.Drawing.Point(-4, -4);
+            this.pnlTitleHrlyConsumption.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pnlTitleHrlyConsumption.Name = "pnlTitleHrlyConsumption";
-            this.pnlTitleHrlyConsumption.Size = new System.Drawing.Size(864, 107);
+            this.pnlTitleHrlyConsumption.Size = new System.Drawing.Size(648, 87);
             this.pnlTitleHrlyConsumption.TabIndex = 5;
             // 
             // TableGraphicsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(850, 581);
+            this.ClientSize = new System.Drawing.Size(638, 472);
             this.Controls.Add(this.btnPcBxBack);
             this.Controls.Add(this.lblTitleHrlyConsumption);
             this.Controls.Add(this.chrtHrlyConsumption);
             this.Controls.Add(this.pnlTitleHrlyConsumption);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "TableGraphicsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TableGraphicsForm";

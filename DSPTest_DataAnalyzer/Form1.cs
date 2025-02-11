@@ -29,7 +29,7 @@ namespace DSPTest_DataAnalyzer
 
         private void FetchData()
         {
-            string connectionString = "Server=(localdb)\\mssqllocaldb;Database=DSPTest;Integrated Security=True;";
+            string connectionString = "Server=DESKTOP-D81M7DI;Database=DSPTest;Integrated Security=True;";
             string query = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'tbl_customer_usage' AND COLUMN_NAME <> 'Time'";
 
             try
@@ -79,7 +79,7 @@ namespace DSPTest_DataAnalyzer
 
         private void PlotCustomerData(string customerName)
         {
-            string connectionString = "Server=(localdb)\\mssqllocaldb;Database=DSPTest;Integrated Security=True;";
+            string connectionString = "Server=DESKTOP-D81M7DI;Database=DSPTest;Integrated Security=True;";
             string query = $"SELECT Time, [{customerName}] FROM tbl_customer_usage ORDER BY Time";
 
             try
@@ -126,7 +126,7 @@ namespace DSPTest_DataAnalyzer
 
         private int CountLoadPeaks(string customerName)
         {
-            string connectionString = "Server=(localdb)\\mssqllocaldb;Database=DSPTest;Integrated Security=True;";
+            string connectionString = "Server=DESKTOP-D81M7DI;Database=DSPTest;Integrated Security=True;";
             string query = $"SELECT Time, [{customerName}] FROM tbl_customer_usage ORDER BY Time";
 
             List<double> dataPoints = new List<double>();
@@ -175,7 +175,7 @@ namespace DSPTest_DataAnalyzer
 
         private double GetHighestLoadPeak(string customerName)
         {
-            string connectionString = "Server=(localdb)\\mssqllocaldb;Database=DSPTest;Integrated Security=True;";
+            string connectionString = "Server=DESKTOP-D81M7DI;Database=DSPTest;Integrated Security=True;";
             string query = $"SELECT Time, [{customerName}] FROM tbl_customer_usage ORDER BY Time";
 
             List<double> dataPoints = new List<double>();
@@ -219,15 +219,9 @@ namespace DSPTest_DataAnalyzer
 
         private void DisplayHourlyPowerConsumption(string customerName)
         {
-            string connectionString = "Server=(localdb)\\mssqllocaldb;Database=DSPTest;Integrated Security=True;";
+            string connectionString = "Server=DESKTOP-D81M7DI;Database=DSPTest;Integrated Security=True;";
 
-            string query = $@"
-                            SELECT 
-                            DATEPART(HOUR, Time) AS Hour, 
-                            SUM([{customerName}]) AS TotalConsumption
-                            FROM tbl_customer_usage
-                            GROUP BY DATEPART(HOUR, Time)
-                            ORDER BY Hour";
+            string query = $@"SELECT Time,[{customerName}] AS Energy FROM tbl_customer_usage ORDER BY Time";
 
             try
             {
@@ -243,9 +237,39 @@ namespace DSPTest_DataAnalyzer
                     }
                 }
 
-                dgvConsumptionSummary.DataSource = dataTable;
+                Dictionary<int, double> hourlyPower = new Dictionary<int, double>();
+
+                for (int i = 0; i < dataTable.Rows.Count - 1; i++)
+                {
+                    DateTime time1 = Convert.ToDateTime(dataTable.Rows[i]["Time"]);
+                    DateTime time2 = Convert.ToDateTime(dataTable.Rows[i + 1]["Time"]);
+                    double energy1 = Convert.ToDouble(dataTable.Rows[i]["Energy"]);
+                    double energy2 = Convert.ToDouble(dataTable.Rows[i + 1]["Energy"]);
+
+                    double timeDif = (time2 - time1).TotalMinutes / 60.0;
+
+                    double power = ((energy1 + energy2) / 2) * timeDif;
+
+                    int hour = time1.Hour;
+
+                    if (!hourlyPower.ContainsKey(hour))
+                        hourlyPower[hour] = 0;
+
+                    hourlyPower[hour] += power;
+                }
+
+                DataTable resultTable = new DataTable();
+                resultTable.Columns.Add("Hour", typeof(int));
+                resultTable.Columns.Add("Power Consumption (kWh)", typeof(double));
+
+                foreach (var hp in hourlyPower)
+                {
+                    resultTable.Rows.Add(hp.Key, hp.Value);
+                }
+
+                dgvConsumptionSummary.DataSource = resultTable;
                 dgvConsumptionSummary.Columns["Hour"].HeaderText = "Hour";
-                dgvConsumptionSummary.Columns["TotalConsumption"].HeaderText = "Power Consumption (kWh)";
+                dgvConsumptionSummary.Columns["Power Consumption (kWh)"].HeaderText = "Power Consumption (kWh)";
             }
             catch (Exception ex)
             {
